@@ -1,13 +1,13 @@
-#include "s21_matrix_oop_test.h"
+#include "matrix_test.h"
 
 TEST(test_constructor, default_constructor) {
-  S21Matrix test;
+  Matrix test;
 
   run_through_matrix_num(test, 0.00000001);
 }
 
 TEST(test_constructor, pametrized_constructor) {
-  S21Matrix test(5, 5);
+  Matrix test(5, 5);
 
   run_through_matrix_num(test, 0.00000001);
   EXPECT_EQ(test.get_cols(), 5);
@@ -15,10 +15,10 @@ TEST(test_constructor, pametrized_constructor) {
 }
 
 TEST(test_constructor, copy_constructor) {
-  S21Matrix test_init(5, 5);
+  Matrix test_init(5, 5);
   fill_matrix(&test_init, 2);
 
-  S21Matrix test(test_init);
+  Matrix test(test_init);
 
   run_through_matrix_num(test, 2);
   EXPECT_EQ(test.get_cols(), 5);
@@ -26,10 +26,10 @@ TEST(test_constructor, copy_constructor) {
 }
 
 TEST(test_constructor, move_constructor) {
-  S21Matrix test_init(5, 5);
+  Matrix test_init(5, 5);
   fill_matrix(&test_init, 2);
 
-  S21Matrix test(std::move(test_init));
+  Matrix test(std::move(test_init));
 
   run_through_matrix_num(test, 2);
   EXPECT_EQ(test.get_cols(), 5);
@@ -37,7 +37,7 @@ TEST(test_constructor, move_constructor) {
 }
 
 TEST(test_operations, eq_matrix) {
-  S21Matrix test, test2;
+  Matrix test, test2;
 
   fill_matrix(&test, 2.00000001);
   fill_matrix(&test2, 2);
@@ -45,7 +45,7 @@ TEST(test_operations, eq_matrix) {
 }
 
 TEST(test_operations, sum_matrix) {
-  S21Matrix test, test2;
+  Matrix test, test2;
 
   fill_matrix(&test, 2.00000001);
   test.sum_matrix(test);
@@ -54,7 +54,7 @@ TEST(test_operations, sum_matrix) {
 }
 
 TEST(test_operations, sub_matrix) {
-  S21Matrix test, test2;
+  Matrix test, test2;
 
   fill_matrix(&test, 4.00000001);
   fill_matrix(&test2, 2);
@@ -63,7 +63,7 @@ TEST(test_operations, sub_matrix) {
 }
 
 TEST(test_operations, mul_number) {
-  S21Matrix test, test2;
+  Matrix test, test2;
 
   fill_matrix(&test, 4.00000001);
   fill_matrix(&test2, 16);
@@ -72,7 +72,7 @@ TEST(test_operations, mul_number) {
 }
 
 TEST(test_operations, mul_matrix) {
-  S21Matrix test(3, 2), test2(2, 3), result(3, 3);
+  Matrix test(3, 2), test2(2, 3), result(3, 3);
 
   test.set_element(0, 0, 1);
   test.set_element(0, 1, 4);
@@ -103,7 +103,7 @@ TEST(test_operations, mul_matrix) {
 }
 
 TEST(test_operations, transpose) {
-  S21Matrix test(3, 2), result(2, 3);
+  Matrix test(3, 2), result(2, 3);
 
   test.set_element(0, 0, 1);
   test.set_element(0, 1, 4);
@@ -124,7 +124,7 @@ TEST(test_operations, transpose) {
 }
 
 TEST(test_operations, calc_complements) {
-  S21Matrix test(3, 3), result(3, 3);
+  Matrix test(3, 3), result(3, 3);
 
   test.set_element(0, 0, 1);
   test.set_element(0, 1, 2);
@@ -151,7 +151,7 @@ TEST(test_operations, calc_complements) {
 }
 
 TEST(test_operations, determinant) {
-  S21Matrix test(3, 3);
+  Matrix test(3, 3);
   double det = 0.0;
 
   test.set_element(0, 0, 1);
@@ -165,11 +165,11 @@ TEST(test_operations, determinant) {
   test.set_element(2, 2, 1);
 
   det = test.determinant();
-  EXPECT_TRUE(det - (-40) < ACCURACY);
+  EXPECT_TRUE(det - (-40) < kACCURACY);
 }
 
 TEST(test_operations, inverse_matrix) {
-  S21Matrix test(3, 3), result(3, 3);
+  Matrix test(3, 3), result(3, 3);
 
   test.set_element(0, 0, 2);
   test.set_element(0, 1, 5);
@@ -196,43 +196,43 @@ TEST(test_operations, inverse_matrix) {
 }
 
 TEST(test_accessors_mutators, set_element__get_element) {
-  S21Matrix test(3, 3);
+  Matrix test(3, 3);
 
   test.set_element(2, 2, 13.5);
-  EXPECT_TRUE(test.get_element(2, 2) - 13.5 < ACCURACY);
+  EXPECT_TRUE(test.get_element(2, 2) - 13.5 < kACCURACY);
 }
 
 TEST(test_accessors_mutators, get_rows__get_cols) {
-  S21Matrix test(3, 6);
+  Matrix test(3, 6);
 
-  EXPECT_TRUE(test.get_cols() - 6 < ACCURACY);
-  EXPECT_TRUE(test.get_rows() - 3 < ACCURACY);
+  EXPECT_TRUE(test.get_cols() - 6 < kACCURACY);
+  EXPECT_TRUE(test.get_rows() - 3 < kACCURACY);
 }
 
 TEST(test_accessors_mutators, set_rows__set_cols) {
-  S21Matrix test(3, 3);
+  Matrix test(3, 3);
 
   test.set_cols(5);
   test.set_rows(10);
 
   fill_matrix(&test, 42.1);
 
-  EXPECT_TRUE(test.get_cols() - 5 < ACCURACY);
-  EXPECT_TRUE(test.get_rows() - 10 < ACCURACY);
+  EXPECT_TRUE(test.get_cols() - 5 < kACCURACY);
+  EXPECT_TRUE(test.get_rows() - 10 < kACCURACY);
 
-  EXPECT_TRUE(test.get_element(0, 4) - 42.1 < ACCURACY);
-  EXPECT_TRUE(test.get_element(9, 4) - 42.1 < ACCURACY);
+  EXPECT_TRUE(test.get_element(0, 4) - 42.1 < kACCURACY);
+  EXPECT_TRUE(test.get_element(9, 4) - 42.1 < kACCURACY);
 }
 
 TEST(test_operators, eq_eq) {
-  S21Matrix test(3, 3);
+  Matrix test(3, 3);
 
   fill_matrix(&test, 9.123);
   EXPECT_TRUE(test == test);
 }
 
 TEST(test_operators, plus) {
-  S21Matrix test(3, 3), result(3, 3);
+  Matrix test(3, 3), result(3, 3);
 
   fill_matrix(&test, 7);
   fill_matrix(&result, 14);
@@ -241,7 +241,7 @@ TEST(test_operators, plus) {
 }
 
 TEST(test_operators, minus) {
-  S21Matrix test(3, 3), result(3, 3);
+  Matrix test(3, 3), result(3, 3);
 
   fill_matrix(&test, 14);
   fill_matrix(&result, 7);
@@ -250,7 +250,7 @@ TEST(test_operators, minus) {
 }
 
 TEST(test_operators, multiply) {
-  S21Matrix test(3, 2), test2(2, 3), result(3, 3);
+  Matrix test(3, 2), test2(2, 3), result(3, 3);
 
   test.set_element(0, 0, 1);
   test.set_element(0, 1, 4);
@@ -281,7 +281,7 @@ TEST(test_operators, multiply) {
 }
 
 TEST(test_operators, plus_eq) {
-  S21Matrix test(3, 3), result(3, 3);
+  Matrix test(3, 3), result(3, 3);
 
   fill_matrix(&test, 7);
   fill_matrix(&result, 14);
@@ -290,7 +290,7 @@ TEST(test_operators, plus_eq) {
 }
 
 TEST(test_operators, minus_eq) {
-  S21Matrix test(3, 3), result(3, 3);
+  Matrix test(3, 3), result(3, 3);
 
   fill_matrix(&test, 14);
   fill_matrix(&result, 7);
@@ -299,7 +299,7 @@ TEST(test_operators, minus_eq) {
 }
 
 TEST(test_operators, multiply_eq) {
-  S21Matrix test(3, 2), test2(2, 3), result(3, 3);
+  Matrix test(3, 2), test2(2, 3), result(3, 3);
 
   test.set_element(0, 0, 1);
   test.set_element(0, 1, 4);
@@ -330,17 +330,17 @@ TEST(test_operators, multiply_eq) {
 }
 
 TEST(test_operators, indexation) {
-  S21Matrix test(4, 4);
+  Matrix test(4, 4);
 
   fill_matrix(&test, 39.567);
 
-  EXPECT_TRUE(test(0, 0) - 39.567 < ACCURACY);
-  EXPECT_TRUE(test(1, 0) - 39.567 < ACCURACY);
-  EXPECT_TRUE(test(0, 2) - 39.567 < ACCURACY);
-  EXPECT_TRUE(test(2, 0) - 39.567 < ACCURACY);
-  EXPECT_TRUE(test(1, 1) - 39.567 < ACCURACY);
-  EXPECT_TRUE(test(2, 2) - 39.567 < ACCURACY);
-  EXPECT_TRUE(test(3, 3) - 39.567 < ACCURACY);
+  EXPECT_TRUE(test(0, 0) - 39.567 < kACCURACY);
+  EXPECT_TRUE(test(1, 0) - 39.567 < kACCURACY);
+  EXPECT_TRUE(test(0, 2) - 39.567 < kACCURACY);
+  EXPECT_TRUE(test(2, 0) - 39.567 < kACCURACY);
+  EXPECT_TRUE(test(1, 1) - 39.567 < kACCURACY);
+  EXPECT_TRUE(test(2, 2) - 39.567 < kACCURACY);
+  EXPECT_TRUE(test(3, 3) - 39.567 < kACCURACY);
 }
 
 int main(int argc, char* argv[]) {
@@ -348,15 +348,15 @@ int main(int argc, char* argv[]) {
   return RUN_ALL_TESTS();
 }
 
-void run_through_matrix_num(S21Matrix test, double value) {
+void run_through_matrix_num(Matrix test, double value) {
   for (int i = 0; i < test.get_rows(); i += 1) {
     for (int j = 0; j < test.get_cols(); j += 1) {
-      EXPECT_NEAR(test(i, j), value, ACCURACY);
+      EXPECT_NEAR(test(i, j), value, kACCURACY);
     }
   }
 }
 
-void fill_matrix(S21Matrix* test, double value) {
+void fill_matrix(Matrix* test, double value) {
   for (int i = 0; i < test->get_rows(); i += 1) {
     for (int j = 0; j < test->get_cols(); j += 1) {
       test->set_element(i, j, value);
