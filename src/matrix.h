@@ -44,7 +44,7 @@ class Matrix {
   Matrix operator+=(const Matrix& other);
   Matrix operator-=(const Matrix& other);
   Matrix operator*=(const Matrix& other);
-  double operator()(int i, int j);
+  double& operator()(int i, int j);
 
  private:
   int rows_, cols_;
