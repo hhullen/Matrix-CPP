@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "matrix.h"
-using S21::Matrix;
+using hhullen::Matrix;
 
 void run_through_matrix_num(Matrix test, double value);
 void fill_matrix(Matrix* test, double value);

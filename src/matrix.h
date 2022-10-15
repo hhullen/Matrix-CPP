@@ -10,7 +10,7 @@ const double kACCURACY = 0.0000001;
 const bool kFILL_WITH_ZERO = true;
 const bool kNO_FILL = false;
 
-namespace S21 {
+namespace hhullen {
 
 class Matrix {
  public:
@@ -69,6 +69,6 @@ class Matrix {
                          Matrix* minor);
 };
 
-}  // namespace S21
+}  // namespace hhullen
 
 #endif  // SRC_MATRIX_H_
