@@ -343,6 +343,28 @@ TEST(test_operators, indexation) {
   EXPECT_TRUE(test(3, 3) - 39.567 < kACCURACY);
 }
 
+TEST(test_operators, hadamart_product) {
+  Matrix test(4, 1);
+  Matrix test2(4, 1);
+
+  test(0, 0) = 2;
+  test(1, 0) = 3;
+  test(2, 0) = 4;
+  test(3, 0) = 5;
+
+  test2(0, 0) = 2;
+  test2(1, 0) = 3;
+  test2(2, 0) = 4;
+  test2(3, 0) = 5;
+
+  test.hadamard_product(test2);
+
+  EXPECT_EQ(test(0, 0), 4);
+  EXPECT_EQ(test(1, 0), 9);
+  EXPECT_EQ(test(2, 0), 16);
+  EXPECT_EQ(test(3, 0), 25);
+}
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

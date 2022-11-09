@@ -78,12 +78,12 @@ Matrix::~Matrix() {
  * @return true
  * @return false
  */
-bool Matrix::eq_matrix(const Matrix& other) {
+bool Matrix::eq_matrix(const Matrix& other) const {
   bool is_equal = true;
 
   if (rows_ == other.rows_ && cols_ == other.cols_) {
-    for (int i = 0; is_equal && i < rows_; i += 1) {
-      for (int j = 0; is_equal && j < cols_; j += 1) {
+    for (int i = 0; is_equal && i < rows_; ++i) {
+      for (int j = 0; is_equal && j < cols_; ++j) {
         is_equal = fabs(matrix_[i][j] - other.matrix_[i][j]) < kACCURACY;
       }
     }
@@ -104,8 +104,8 @@ void Matrix::sum_matrix(const Matrix& other) {
     throw invalid_argument("Summation the matrix that is not square");
   }
 
-  for (int i = 0; i < rows_; i += 1) {
-    for (int j = 0; j < cols_; j += 1) {
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
       matrix_[i][j] += other.matrix_[i][j];
     }
   }
@@ -121,8 +121,8 @@ void Matrix::sub_matrix(const Matrix& other) {
     throw invalid_argument("Substraction the matrix that is not square");
   }
 
-  for (int i = 0; i < rows_; i += 1) {
-    for (int j = 0; j < cols_; j += 1) {
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
       matrix_[i][j] -= other.matrix_[i][j];
     }
   }
@@ -134,8 +134,8 @@ void Matrix::sub_matrix(const Matrix& other) {
  * @param num const double type
  */
 void Matrix::mul_number(const double num) {
-  for (int i = 0; i < rows_; i += 1) {
-    for (int j = 0; j < cols_; j += 1) {
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
       matrix_[i][j] *= num;
     }
   }
@@ -154,9 +154,9 @@ void Matrix::mul_matrix(const Matrix& other) {
   }
   double* buffer_row = nullptr;
 
-  for (int i = 0; i < rows_; i += 1) {
+  for (int i = 0; i < rows_; ++i) {
     buffer_row = new double[other.cols_];
-    for (int j = 0; j < other.cols_; j += 1) {
+    for (int j = 0; j < other.cols_; ++j) {
       buffer_row[j] = 0;
       calculate_multiplied_matrix_element(other, i, j, &buffer_row[j]);
     }
@@ -167,16 +167,28 @@ void Matrix::mul_matrix(const Matrix& other) {
   cols_ = other.cols_;
 }
 
+void Matrix::hadamard_product(const Matrix& other) {
+  if (cols_ != other.cols_) {
+    throw invalid_argument("Hadamatd product with different cols");
+  }
+
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
+      matrix_[i][j] *= other.matrix_[i][j];
+    }
+  }
+}
+
 /**
  * @brief Transposes matrix
  *
  * @return Matrix
  */
-Matrix Matrix::transpose() {
+Matrix Matrix::transpose() const {
   Matrix returnable(cols_, rows_);
 
-  for (int i = 0; i < returnable.rows_; i += 1) {
-    for (int j = 0; j < returnable.cols_; j += 1) {
+  for (int i = 0; i < returnable.rows_; ++i) {
+    for (int j = 0; j < returnable.cols_; ++j) {
       returnable.matrix_[i][j] = matrix_[j][i];
     }
   }
@@ -197,8 +209,8 @@ Matrix Matrix::calc_complements() {
   Matrix returnable(cols_, rows_);
 
   if (cols_ != 1 && rows_ != 1) {
-    for (int i = 0; i < returnable.rows_; i += 1) {
-      for (int j = 0; j < returnable.cols_; j += 1) {
+    for (int i = 0; i < returnable.rows_; ++i) {
+      for (int j = 0; j < returnable.cols_; ++j) {
         returnable.matrix_[i][j] =
             algebraic_addition(this, i, j) * (-1 + !((i + j) % 2) * 2);
       }
@@ -263,7 +275,7 @@ Matrix Matrix::inverse_matrix() {
  * @param j int type
  * @return double
  */
-double Matrix::get_element(int i, int j) {
+double Matrix::get_element(int i, int j) const {
   if ((i < 0 || i >= rows_) || (j < 0 || j >= cols_)) {
     throw out_of_range("Getting element that is out of matrix range");
   }
@@ -291,14 +303,14 @@ void Matrix::set_element(int i, int j, double value) {
  *
  * @return int
  */
-int Matrix::get_rows() { return rows_; }
+int Matrix::get_rows() const { return rows_; }
 
 /**
  * @brief Returns amount of matrix columns
  *
  * @return int
  */
-int Matrix::get_cols() { return cols_; }
+int Matrix::get_cols() const { return cols_; }
 
 /**
  * @brief Sets new amount of matrix rows
@@ -314,14 +326,14 @@ void Matrix::set_rows(int new_val) {
   if (new_val < rows_) {
     rows_ = new_val;
   }
-  for (int i = 0; i < rows_; i += 1) {
+  for (int i = 0; i < rows_; ++i) {
     buffer[i] = matrix_[i];
   }
   delete[] this->matrix_;
   this->matrix_ = buffer;
   buffer = nullptr;
 
-  for (int i = rows_; i < new_val; i += 1) {
+  for (int i = rows_; i < new_val; ++i) {
     this->matrix_[i] = new double[cols_];
     fill_with_zeros(i);
   }
@@ -342,12 +354,12 @@ void Matrix::set_cols(int new_val) {
   if (new_val < cols_) {
     cols_ = new_val;
   }
-  for (int i = 0; i < rows_; i += 1) {
+  for (int i = 0; i < rows_; ++i) {
     buffer = new double[new_val];
-    for (int j = 0; j < cols_; j += 1) {
+    for (int j = 0; j < cols_; ++j) {
       buffer[j] = matrix_[i][j];
     }
-    for (int j = cols_; j < new_val; j += 1) {
+    for (int j = cols_; j < new_val; ++j) {
       buffer[j] = 0;
     }
     delete[] matrix_[i];
@@ -360,7 +372,9 @@ void Matrix::set_cols(int new_val) {
 /*
   Operators
 */
-bool Matrix::operator==(const Matrix& other) { return this->eq_matrix(other); }
+bool Matrix::operator==(const Matrix& other) const {
+  return this->eq_matrix(other);
+}
 
 Matrix& Matrix::operator=(const Matrix& other) {
   this->~Matrix();
@@ -372,21 +386,21 @@ Matrix& Matrix::operator=(const Matrix& other) {
   return *this;
 }
 
-Matrix Matrix::operator+(const Matrix& other) {
+Matrix Matrix::operator+(const Matrix& other) const {
   Matrix returnable(*this);
   returnable.sum_matrix(other);
 
   return returnable;
 }
 
-Matrix Matrix::operator-(const Matrix& other) {
+Matrix Matrix::operator-(const Matrix& other) const {
   Matrix returnable(*this);
   returnable.sub_matrix(other);
 
   return returnable;
 }
 
-Matrix Matrix::operator*(const Matrix& other) {
+Matrix Matrix::operator*(const Matrix& other) const {
   Matrix returnable(*this);
   returnable.mul_matrix(other);
 
@@ -416,13 +430,21 @@ double& Matrix::operator()(int i, int j) {
   return matrix_[i][j];
 }
 
+double Matrix::operator()(int i, int j) const {
+  if ((i < 0 || i > rows_) || j < 0 || j > cols_) {
+    throw out_of_range("Setting element that is out of matrix range");
+  }
+
+  return matrix_[i][j];
+}
+
 /*
   Private functions
 */
 void Matrix::init_matrix(bool fill) {
   matrix_ = new double*[rows_];
   if (matrix_) {
-    for (int i = 0; i < rows_; i += 1) {
+    for (int i = 0; i < rows_; ++i) {
       matrix_[i] = new double[cols_];
       if (fill) fill_with_zeros(i);
     }
@@ -430,16 +452,16 @@ void Matrix::init_matrix(bool fill) {
 }
 
 void Matrix::copy_data_other_to_this_matrix(double** other_matrix) {
-  for (int i = 0; i < rows_; i += 1) {
-    for (int j = 0; j < cols_; j += 1) {
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
       matrix_[i][j] = other_matrix[i][j];
     }
   }
 }
 
 void Matrix::copy_data_this_to_other_matrix(double** other_matrix) {
-  for (int i = 0; i < rows_; i += 1) {
-    for (int j = 0; j < cols_; j += 1) {
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
       other_matrix[i][j] = matrix_[i][j];
     }
   }
@@ -453,7 +475,7 @@ void Matrix::calculate_multiplied_matrix_element(const Matrix& other, int i,
 }
 
 void Matrix::fill_with_zeros(int current_row) {
-  for (int i = 0; i < cols_; i += 1) {
+  for (int i = 0; i < cols_; ++i) {
     matrix_[current_row][i] = 0;
   }
 }
@@ -482,7 +504,7 @@ double Matrix::calculate_Gauss_determinant() {
   bool is_det_zero = false;
 
   copy_data_this_to_other_matrix(buffer.matrix_);
-  for (int i = 0; !is_det_zero && i < buffer.cols_; i += 1) {
+  for (int i = 0; !is_det_zero && i < buffer.cols_; ++i) {
     for (int j = buffer.rows_ - 1; !is_det_zero && j > row_constrain; j -= 1) {
       process_the_row(&buffer, j, i, &is_det_zero);
     }
@@ -500,7 +522,7 @@ double Matrix::calculate_Gauss_determinant() {
 double Matrix::multiply_diagonal(Matrix* buffer) {
   double returnable = 1.0;
 
-  for (int i = 0; i < buffer->cols_; i += 1) {
+  for (int i = 0; i < buffer->cols_; ++i) {
     returnable *= buffer->matrix_[i][i];
   }
 
@@ -543,7 +565,7 @@ void Matrix::scan_column_to_find_nonzero_num(Matrix* buffer, const int row,
 }
 
 void Matrix::summ_rows(Matrix* buffer, const int row_num, const int row_zero) {
-  for (int i = 0; i < buffer->cols_; i += 1) {
+  for (int i = 0; i < buffer->cols_; ++i) {
     buffer->matrix_[row_zero][i] += buffer->matrix_[row_num][i];
   }
 }
@@ -562,15 +584,15 @@ void Matrix::make_matrix_minor(Matrix* initial_matrix, int row, int col,
                                Matrix* minor) {
   int i = 0, j = 0;
 
-  for (int im = 0; im < minor->rows_; im += 1) {
-    for (int jm = 0; jm < minor->rows_; jm += 1) {
-      if (i == row) i += 1;
-      if (j == col) j += 1;
+  for (int im = 0; im < minor->rows_; ++im) {
+    for (int jm = 0; jm < minor->rows_; ++jm) {
+      if (i == row) ++i;
+      if (j == col) ++j;
       minor->matrix_[im][jm] = initial_matrix->matrix_[i][j];
-      i += 1;
+      ++i;
     }
     i = 0;
-    j += 1;
+    ++j;
   }
 }
 

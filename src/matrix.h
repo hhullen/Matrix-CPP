@@ -20,31 +20,33 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
-  bool eq_matrix(const Matrix& other);
+  bool eq_matrix(const Matrix& other) const;
   void sum_matrix(const Matrix& other);
   void sub_matrix(const Matrix& other);
   void mul_number(const double num);
   void mul_matrix(const Matrix& other);
-  Matrix transpose();
+  void hadamard_product(const Matrix& other);
+  Matrix transpose() const;
   Matrix calc_complements();
   double determinant();
   Matrix inverse_matrix();
-  double get_element(int i, int j);
+  double get_element(int i, int j) const;
   void set_element(int i, int j, double value);
-  int get_rows();
-  int get_cols();
+  int get_rows() const;
+  int get_cols() const;
   void set_rows(int new_val);
   void set_cols(int new_val);
 
-  bool operator==(const Matrix& other);
+  bool operator==(const Matrix& other) const;
   Matrix& operator=(const Matrix& other);
-  Matrix operator+(const Matrix& other);
-  Matrix operator-(const Matrix& other);
-  Matrix operator*(const Matrix& other);
+  Matrix operator+(const Matrix& other) const;
+  Matrix operator-(const Matrix& other) const;
+  Matrix operator*(const Matrix& other) const;
   Matrix operator+=(const Matrix& other);
   Matrix operator-=(const Matrix& other);
   Matrix operator*=(const Matrix& other);
   double& operator()(int i, int j);
+  double operator()(int i, int j) const;
 
  private:
   int rows_, cols_;
