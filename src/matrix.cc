@@ -167,6 +167,11 @@ void Matrix::mul_matrix(const Matrix& other) {
   cols_ = other.cols_;
 }
 
+/**
+ * @brief Calculates elementwise product
+ *
+ * @param other const Matrix& type
+ */
 void Matrix::hadamard_product(const Matrix& other) {
   if (cols_ != other.cols_) {
     throw invalid_argument("Hadamatd product with different cols");
