@@ -16,6 +16,7 @@ class Matrix {
   void sub_matrix(const Matrix& other);
   void mul_number(const double num);
   void mul_matrix(const Matrix& other);
+  void hadamard_product(const Matrix& other);
   Matrix transpose();
   Matrix calc_complements();
   double determinant();
