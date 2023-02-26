@@ -78,7 +78,7 @@ Matrix::~Matrix() {
  * @return true
  * @return false
  */
-bool Matrix::eq_matrix(const Matrix& other) const {
+bool Matrix::IsMatrixEQ(const Matrix& other) const {
   bool is_equal = true;
 
   if (rows_ == other.rows_ && cols_ == other.cols_) {
@@ -99,7 +99,7 @@ bool Matrix::eq_matrix(const Matrix& other) const {
  *
  * @param other const Matrix& type
  */
-void Matrix::sum_matrix(const Matrix& other) {
+void Matrix::Summarize(const Matrix& other) {
   if (rows_ != other.rows_ || cols_ != other.cols_) {
     throw invalid_argument("Summation the matrix that is not square");
   }
@@ -116,7 +116,7 @@ void Matrix::sum_matrix(const Matrix& other) {
  *
  * @param other const Matrix& type
  */
-void Matrix::sub_matrix(const Matrix& other) {
+void Matrix::Substract(const Matrix& other) {
   if (rows_ != other.rows_ || cols_ != other.cols_) {
     throw invalid_argument("Substraction the matrix that is not square");
   }
@@ -133,7 +133,7 @@ void Matrix::sub_matrix(const Matrix& other) {
  *
  * @param num const double type
  */
-void Matrix::mul_number(const double num) {
+void Matrix::MultiplyNumber(const double num) {
   for (int i = 0; i < rows_; ++i) {
     for (int j = 0; j < cols_; ++j) {
       matrix_[i][j] *= num;
@@ -147,7 +147,7 @@ void Matrix::mul_number(const double num) {
  *
  * @param other const Matrix& type
  */
-void Matrix::mul_matrix(const Matrix& other) {
+void Matrix::Multiply(const Matrix& other) {
   if (cols_ != other.rows_) {
     throw invalid_argument(
         "Multiplication matrix with different cols and rows");
@@ -172,7 +172,7 @@ void Matrix::mul_matrix(const Matrix& other) {
  *
  * @param other const Matrix& type
  */
-void Matrix::hadamard_product(const Matrix& other) {
+void Matrix::HadamardProduct(const Matrix& other) {
   if (cols_ != other.cols_ || rows_ != other.rows_) {
     throw invalid_argument("Hadamatd product with different cols or rows");
   }
@@ -189,7 +189,7 @@ void Matrix::hadamard_product(const Matrix& other) {
  *
  * @return Matrix
  */
-Matrix Matrix::transpose() const {
+Matrix Matrix::Transpose() const {
   Matrix returnable(cols_, rows_);
 
   for (int i = 0; i < returnable.rows_; ++i) {
@@ -206,7 +206,7 @@ Matrix Matrix::transpose() const {
  *
  * @return Matrix
  */
-Matrix Matrix::calc_complements() {
+Matrix Matrix::CelculateComplements() {
   if (cols_ != rows_) {
     throw invalid_argument(
         "Calculation complements of matrices with different cols and rows");
@@ -228,26 +228,26 @@ Matrix Matrix::calc_complements() {
 }
 
 /**
- * @brief Calculates determinant
+ * @brief Calculates Determinant
  *
  * @return double
  */
-double Matrix::determinant() {
+double Matrix::Determinant() {
   double returnable = NAN;
 
   if (cols_ != rows_) {
     throw invalid_argument(
-        "Calculation determinant of matrix with different cols and rows");
+        "Calculation Determinant of matrix with different cols and rows");
   }
 
   if (rows_ == 1) {
     returnable = matrix_[0][0];
   } else if (rows_ == 2) {
-    returnable = calculate_2d_determinant();
+    returnable = calculate_2d_Determinant();
   } else if (rows_ == 3) {
-    returnable = calculate_3d_determinant();
+    returnable = calculate_3d_Determinant();
   } else {
-    returnable = calculate_Gauss_determinant();
+    returnable = calculate_Gauss_Determinant();
   }
 
   return returnable;
@@ -258,17 +258,17 @@ double Matrix::determinant() {
  *
  * @return Matrix
  */
-Matrix Matrix::inverse_matrix() {
-  double det = this->determinant();
+Matrix Matrix::Inverse() {
+  double det = this->Determinant();
 
   if (fabs(det) < kACCURACY) {
-    throw invalid_argument("Inversion of matrix with determinant equals 0");
+    throw invalid_argument("Inversion of matrix with Determinant equals 0");
   }
   Matrix returnable(*this);
 
-  returnable = returnable.calc_complements();
-  returnable = returnable.transpose();
-  returnable.mul_number(1 / det);
+  returnable = returnable.CelculateComplements();
+  returnable = returnable.Transpose();
+  returnable.MultiplyNumber(1 / det);
 
   return returnable;
 }
@@ -378,7 +378,7 @@ void Matrix::set_cols(int new_val) {
   Operators
 */
 bool Matrix::operator==(const Matrix& other) const {
-  return this->eq_matrix(other);
+  return this->IsMatrixEQ(other);
 }
 
 Matrix& Matrix::operator=(const Matrix& other) {
@@ -393,37 +393,37 @@ Matrix& Matrix::operator=(const Matrix& other) {
 
 Matrix Matrix::operator+(const Matrix& other) const {
   Matrix returnable(*this);
-  returnable.sum_matrix(other);
+  returnable.Summarize(other);
 
   return returnable;
 }
 
 Matrix Matrix::operator-(const Matrix& other) const {
   Matrix returnable(*this);
-  returnable.sub_matrix(other);
+  returnable.Substract(other);
 
   return returnable;
 }
 
 Matrix Matrix::operator*(const Matrix& other) const {
   Matrix returnable(*this);
-  returnable.mul_matrix(other);
+  returnable.Multiply(other);
 
   return returnable;
 }
 
 Matrix Matrix::operator+=(const Matrix& other) {
-  this->sum_matrix(other);
+  this->Summarize(other);
   return *this;
 }
 
 Matrix Matrix::operator-=(const Matrix& other) {
-  this->sub_matrix(other);
+  this->Substract(other);
   return *this;
 }
 
 Matrix Matrix::operator*=(const Matrix& other) {
-  this->mul_matrix(other);
+  this->Multiply(other);
   return *this;
 }
 
@@ -485,11 +485,11 @@ void Matrix::fill_with_zeros(int current_row) {
   }
 }
 
-double Matrix::calculate_2d_determinant() {
+double Matrix::calculate_2d_Determinant() {
   return matrix_[0][0] * matrix_[1][1] - matrix_[1][0] * matrix_[0][1];
 }
 
-double Matrix::calculate_3d_determinant() {
+double Matrix::calculate_3d_Determinant() {
   double returnable = 0.0;
 
   returnable += matrix_[0][0] *
@@ -502,7 +502,7 @@ double Matrix::calculate_3d_determinant() {
   return returnable;
 }
 
-double Matrix::calculate_Gauss_determinant() {
+double Matrix::calculate_Gauss_Determinant() {
   Matrix buffer(cols_, rows_);
   double returnable = 0.0;
   int row_constrain = 0;
@@ -580,7 +580,7 @@ double Matrix::algebraic_addition(Matrix* initial_matrix, int row, int col) {
   Matrix minor(initial_matrix->rows_ - 1, initial_matrix->cols_ - 1);
 
   make_matrix_minor(initial_matrix, row, col, &minor);
-  returnable = minor.determinant();
+  returnable = minor.Determinant();
 
   return returnable;
 }

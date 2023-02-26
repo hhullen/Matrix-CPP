@@ -11,16 +11,16 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
-  bool eq_matrix(const Matrix& other);
-  void sum_matrix(const Matrix& other);
-  void sub_matrix(const Matrix& other);
-  void mul_number(const double num);
-  void mul_matrix(const Matrix& other);
-  void hadamard_product(const Matrix& other);
-  Matrix transpose();
-  Matrix calc_complements();
-  double determinant();
-  Matrix inverse_matrix();
+  bool IsMatrixEQ(const Matrix& other);
+  void Summarize(const Matrix& other);
+  void Substract(const Matrix& other);
+  void MultiplyNumber(const double num);
+  void Multiply(const Matrix& other);
+  void HadamardProduct(const Matrix& other);
+  Matrix Transpose();
+  Matrix CelculateComplements();
+  double Determinant();
+  Matrix Inverse();
   double get_element(int i, int j);
   void set_element(int i, int j, double value);
   int get_rows();

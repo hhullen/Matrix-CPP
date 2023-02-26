@@ -36,42 +36,42 @@ TEST(test_constructor, move_constructor) {
   EXPECT_EQ(test.get_rows(), 5);
 }
 
-TEST(test_operations, eq_matrix) {
+TEST(test_operations, IsMatrixEQ) {
   Matrix test, test2;
 
   fill_matrix(&test, 2.00000001);
   fill_matrix(&test2, 2);
-  EXPECT_TRUE(test.eq_matrix(test2));
+  EXPECT_TRUE(test.IsMatrixEQ(test2));
 }
 
-TEST(test_operations, sum_matrix) {
+TEST(test_operations, Summarize) {
   Matrix test, test2;
 
   fill_matrix(&test, 2.00000001);
-  test.sum_matrix(test);
+  test.Summarize(test);
   fill_matrix(&test2, 4);
-  EXPECT_TRUE(test.eq_matrix(test2));
+  EXPECT_TRUE(test.IsMatrixEQ(test2));
 }
 
-TEST(test_operations, sub_matrix) {
+TEST(test_operations, Substract) {
   Matrix test, test2;
 
   fill_matrix(&test, 4.00000001);
   fill_matrix(&test2, 2);
-  test.sub_matrix(test2);
-  EXPECT_TRUE(test.eq_matrix(test2));
+  test.Substract(test2);
+  EXPECT_TRUE(test.IsMatrixEQ(test2));
 }
 
-TEST(test_operations, mul_number) {
+TEST(test_operations, MultiplyNumber) {
   Matrix test, test2;
 
   fill_matrix(&test, 4.00000001);
   fill_matrix(&test2, 16);
-  test.mul_number(4);
-  EXPECT_TRUE(test.eq_matrix(test2));
+  test.MultiplyNumber(4);
+  EXPECT_TRUE(test.IsMatrixEQ(test2));
 }
 
-TEST(test_operations, mul_matrix) {
+TEST(test_operations, Multiply) {
   Matrix test(3, 2), test2(2, 3), result(3, 3);
 
   test.set_element(0, 0, 1);
@@ -98,11 +98,11 @@ TEST(test_operations, mul_matrix) {
   result.set_element(2, 1, 15);
   result.set_element(2, 2, 27);
 
-  test.mul_matrix(test2);
-  EXPECT_TRUE(test.eq_matrix(result));
+  test.Multiply(test2);
+  EXPECT_TRUE(test.IsMatrixEQ(result));
 }
 
-TEST(test_operations, transpose) {
+TEST(test_operations, Transpose) {
   Matrix test(3, 2), result(2, 3);
 
   test.set_element(0, 0, 1);
@@ -119,11 +119,11 @@ TEST(test_operations, transpose) {
   result.set_element(1, 1, 5);
   result.set_element(1, 2, 6);
 
-  test = test.transpose();
-  EXPECT_TRUE(test.eq_matrix(result));
+  test = test.Transpose();
+  EXPECT_TRUE(test.IsMatrixEQ(result));
 }
 
-TEST(test_operations, calc_complements) {
+TEST(test_operations, CelculateComplements) {
   Matrix test(3, 3), result(3, 3);
 
   test.set_element(0, 0, 1);
@@ -146,11 +146,11 @@ TEST(test_operations, calc_complements) {
   result.set_element(2, 1, -2);
   result.set_element(2, 2, 4);
 
-  test = test.calc_complements();
-  EXPECT_TRUE(test.eq_matrix(result));
+  test = test.CelculateComplements();
+  EXPECT_TRUE(test.IsMatrixEQ(result));
 }
 
-TEST(test_operations, determinant) {
+TEST(test_operations, Determinant) {
   Matrix test(3, 3);
   double det = 0.0;
 
@@ -164,11 +164,11 @@ TEST(test_operations, determinant) {
   test.set_element(2, 1, 2);
   test.set_element(2, 2, 1);
 
-  det = test.determinant();
+  det = test.Determinant();
   EXPECT_TRUE(det - (-40) < kACCURACY);
 }
 
-TEST(test_operations, inverse_matrix) {
+TEST(test_operations, Inverse) {
   Matrix test(3, 3), result(3, 3);
 
   test.set_element(0, 0, 2);
@@ -191,8 +191,8 @@ TEST(test_operations, inverse_matrix) {
   result.set_element(2, 1, -29);
   result.set_element(2, 2, 24);
 
-  test = test.inverse_matrix();
-  EXPECT_TRUE(test.eq_matrix(result));
+  test = test.Inverse();
+  EXPECT_TRUE(test.IsMatrixEQ(result));
 }
 
 TEST(test_accessors_mutators, set_element__get_element) {
@@ -277,7 +277,7 @@ TEST(test_operators, multiply) {
   result.set_element(2, 2, 27);
 
   test = test * test2;
-  EXPECT_TRUE(test.eq_matrix(result));
+  EXPECT_TRUE(test.IsMatrixEQ(result));
 }
 
 TEST(test_operators, plus_eq) {
@@ -326,7 +326,7 @@ TEST(test_operators, multiply_eq) {
   result.set_element(2, 2, 27);
 
   test *= test2;
-  EXPECT_TRUE(test.eq_matrix(result));
+  EXPECT_TRUE(test.IsMatrixEQ(result));
 }
 
 TEST(test_operators, indexation) {
@@ -357,7 +357,7 @@ TEST(test_operators, hadamart_product) {
   test2(2, 0) = 4;
   test2(3, 0) = 5;
 
-  test.hadamard_product(test2);
+  test.HadamardProduct(test2);
 
   EXPECT_EQ(test(0, 0), 4);
   EXPECT_EQ(test(1, 0), 9);

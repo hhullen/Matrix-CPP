@@ -20,16 +20,16 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
-  bool eq_matrix(const Matrix& other) const;
-  void sum_matrix(const Matrix& other);
-  void sub_matrix(const Matrix& other);
-  void mul_number(const double num);
-  void mul_matrix(const Matrix& other);
-  void hadamard_product(const Matrix& other);
-  Matrix transpose() const;
-  Matrix calc_complements();
-  double determinant();
-  Matrix inverse_matrix();
+  bool IsMatrixEQ(const Matrix& other) const;
+  void Summarize(const Matrix& other);
+  void Substract(const Matrix& other);
+  void MultiplyNumber(const double num);
+  void Multiply(const Matrix& other);
+  void HadamardProduct(const Matrix& other);
+  Matrix Transpose() const;
+  Matrix CelculateComplements();
+  double Determinant();
+  Matrix Inverse();
   double get_element(int i, int j) const;
   void set_element(int i, int j, double value);
   int get_rows() const;
@@ -58,9 +58,9 @@ class Matrix {
   void calculate_multiplied_matrix_element(const Matrix& other, int i, int j,
                                            double* res);
   void fill_with_zeros(int current_row);
-  double calculate_2d_determinant();
-  double calculate_3d_determinant();
-  double calculate_Gauss_determinant();
+  double calculate_2d_Determinant();
+  double calculate_3d_Determinant();
+  double calculate_Gauss_Determinant();
   double multiply_diagonal(Matrix* buffer);
   void process_the_row(Matrix* buffer, int row, int col, bool* is_det_zero);
   void scan_column_to_find_nonzero_num(Matrix* buffer, const int row,
