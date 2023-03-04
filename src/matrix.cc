@@ -78,7 +78,7 @@ Matrix::~Matrix() {
  * @return true
  * @return false
  */
-bool Matrix::IsMatrixEQ(const Matrix& other) const {
+bool Matrix::IsEqual(const Matrix& other) const {
   bool is_equal = true;
 
   if (rows_ == other.rows_ && cols_ == other.cols_) {
@@ -378,7 +378,7 @@ void Matrix::set_cols(int new_val) {
   Operators
 */
 bool Matrix::operator==(const Matrix& other) const {
-  return this->IsMatrixEQ(other);
+  return this->IsEqual(other);
 }
 
 Matrix& Matrix::operator=(const Matrix& other) {

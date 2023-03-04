@@ -20,7 +20,7 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
-  bool IsMatrixEQ(const Matrix& other) const;
+  bool IsEqual(const Matrix& other) const;
   void Summarize(const Matrix& other);
   void Substract(const Matrix& other);
   void MultiplyNumber(const double num);

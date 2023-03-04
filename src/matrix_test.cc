@@ -36,12 +36,12 @@ TEST(test_constructor, move_constructor) {
   EXPECT_EQ(test.get_rows(), 5);
 }
 
-TEST(test_operations, IsMatrixEQ) {
+TEST(test_operations, IsEqual) {
   Matrix test, test2;
 
   fill_matrix(&test, 2.00000001);
   fill_matrix(&test2, 2);
-  EXPECT_TRUE(test.IsMatrixEQ(test2));
+  EXPECT_TRUE(test.IsEqual(test2));
 }
 
 TEST(test_operations, Summarize) {
@@ -50,7 +50,7 @@ TEST(test_operations, Summarize) {
   fill_matrix(&test, 2.00000001);
   test.Summarize(test);
   fill_matrix(&test2, 4);
-  EXPECT_TRUE(test.IsMatrixEQ(test2));
+  EXPECT_TRUE(test.IsEqual(test2));
 }
 
 TEST(test_operations, Substract) {
@@ -59,7 +59,7 @@ TEST(test_operations, Substract) {
   fill_matrix(&test, 4.00000001);
   fill_matrix(&test2, 2);
   test.Substract(test2);
-  EXPECT_TRUE(test.IsMatrixEQ(test2));
+  EXPECT_TRUE(test.IsEqual(test2));
 }
 
 TEST(test_operations, MultiplyNumber) {
@@ -68,7 +68,7 @@ TEST(test_operations, MultiplyNumber) {
   fill_matrix(&test, 4.00000001);
   fill_matrix(&test2, 16);
   test.MultiplyNumber(4);
-  EXPECT_TRUE(test.IsMatrixEQ(test2));
+  EXPECT_TRUE(test.IsEqual(test2));
 }
 
 TEST(test_operations, Multiply) {
@@ -99,7 +99,7 @@ TEST(test_operations, Multiply) {
   result.set_element(2, 2, 27);
 
   test.Multiply(test2);
-  EXPECT_TRUE(test.IsMatrixEQ(result));
+  EXPECT_TRUE(test.IsEqual(result));
 }
 
 TEST(test_operations, Transpose) {
@@ -120,7 +120,7 @@ TEST(test_operations, Transpose) {
   result.set_element(1, 2, 6);
 
   test = test.Transpose();
-  EXPECT_TRUE(test.IsMatrixEQ(result));
+  EXPECT_TRUE(test.IsEqual(result));
 }
 
 TEST(test_operations, CelculateComplements) {
@@ -147,7 +147,7 @@ TEST(test_operations, CelculateComplements) {
   result.set_element(2, 2, 4);
 
   test = test.CelculateComplements();
-  EXPECT_TRUE(test.IsMatrixEQ(result));
+  EXPECT_TRUE(test.IsEqual(result));
 }
 
 TEST(test_operations, Determinant) {
@@ -192,7 +192,7 @@ TEST(test_operations, Inverse) {
   result.set_element(2, 2, 24);
 
   test = test.Inverse();
-  EXPECT_TRUE(test.IsMatrixEQ(result));
+  EXPECT_TRUE(test.IsEqual(result));
 }
 
 TEST(test_accessors_mutators, set_element__get_element) {
@@ -277,7 +277,7 @@ TEST(test_operators, multiply) {
   result.set_element(2, 2, 27);
 
   test = test * test2;
-  EXPECT_TRUE(test.IsMatrixEQ(result));
+  EXPECT_TRUE(test.IsEqual(result));
 }
 
 TEST(test_operators, plus_eq) {
@@ -326,7 +326,7 @@ TEST(test_operators, multiply_eq) {
   result.set_element(2, 2, 27);
 
   test *= test2;
-  EXPECT_TRUE(test.IsMatrixEQ(result));
+  EXPECT_TRUE(test.IsEqual(result));
 }
 
 TEST(test_operators, indexation) {
