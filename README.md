@@ -37,5 +37,6 @@ class Matrix {
   Matrix operator-=(const Matrix& other);
   Matrix operator*=(const Matrix& other);
   double operator()(int i, int j);
+  ...
 };
 ```
