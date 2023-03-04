@@ -33,8 +33,8 @@ test: clean
 
 $(MAIN_PROJ_NAME).a:
 	$(COMPILER) -c $(FUNCS)
-	ar rc $(MAIN_PROJ_NAME).a $(MAIN_PROJ_NAME).o
-	ranlib $(MAIN_PROJ_NAME).a
+	ar rc lib$(MAIN_PROJ_NAME).a $(MAIN_PROJ_NAME).o
+	ranlib lib$(MAIN_PROJ_NAME).a
 
 valgrind: clean
 	$(COMPILER) $(STD) -g $(GCOV_FLAG) $(TEST_C) -o $(EXECUTABLE) $(TEST_FLAGS)
