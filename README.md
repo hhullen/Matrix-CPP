@@ -42,5 +42,5 @@ class Matrix {
 ```
 
 ### How to use
-- You can make libraty using command `make matrix.a` and then include it to compilation command as `-L <path_to_libmatrix.a> -lmatrix` (example for g++ compiler)
+- You can make libraty using command `make matrix.a` from `src` directory and then include it to compilation command as `-L <path_to_libmatrix.a> -lmatrix` (example for g++ compiler)
 - Possibly to use `matrix.h` and `matrix.cc` source files as alternative
