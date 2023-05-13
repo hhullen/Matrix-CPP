@@ -2,9 +2,18 @@
 #define SRC_MATRIX_H_
 
 #include <cmath>
+#include <fstream>
 #include <iostream>
+#include <string>
+using std::atoi;
+using std::getline;
+using std::ifstream;
 using std::invalid_argument;
+using std::isdigit;
+using std::ofstream;
 using std::out_of_range;
+using std::sscanf;
+using std::string;
 
 const double kACCURACY = 0.0000001;
 const bool kFILL_WITH_ZERO = true;
@@ -20,6 +29,8 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
+  void Load(string& file_path);
+  // void Save(string& file_path);
   bool IsEqual(const Matrix& other) const;
   void Summarize(const Matrix& other);
   void Substract(const Matrix& other);
@@ -51,6 +62,8 @@ class Matrix {
  private:
   int rows_, cols_;
   double** matrix_;
+  ifstream* input_file_;
+  ofstream* output_file_;
 
   void init_matrix(bool fill);
   void copy_data_other_to_this_matrix(double** other_matrix);
@@ -69,6 +82,12 @@ class Matrix {
   double algebraic_addition(Matrix* initial_matrix, int row, int col);
   void make_matrix_minor(Matrix* initial_matrix, int row, int col,
                          Matrix* minor);
+  void IsInputFileOpened();
+  void IsOutputFileOpened();
+  void ReadMatrixSize();
+  void ReadMatrix();
+  void ReadLineToMatrixRow(string& line, int row);
+  void ShiftToNextNumber(string& line, size_t* i);
 };
 
 }  // namespace hhullen

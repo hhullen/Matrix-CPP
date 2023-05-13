@@ -9,7 +9,10 @@ namespace hhullen {
  * @brief Construct a new Matrix::Matrix object
  *
  */
-Matrix::Matrix() : rows_(4), cols_(4) { init_matrix(kFILL_WITH_ZERO); }
+Matrix::Matrix()
+    : rows_(4), cols_(4), input_file_(nullptr), output_file_(nullptr) {
+  init_matrix(kFILL_WITH_ZERO);
+}
 
 /**
  * @brief Construct a new Matrix::Matrix object
@@ -17,7 +20,8 @@ Matrix::Matrix() : rows_(4), cols_(4) { init_matrix(kFILL_WITH_ZERO); }
  * @param rows int type
  * @param cols int type
  */
-Matrix::Matrix(int rows, int cols) {
+Matrix::Matrix(int rows, int cols)
+    : input_file_(nullptr), output_file_(nullptr) {
   if (rows <= 0 && cols <= 0) {
     throw invalid_argument("Creation matrix with 0x0 size or less");
   }
@@ -32,7 +36,11 @@ Matrix::Matrix(int rows, int cols) {
  *
  * @param other const Matrix& type
  */
-Matrix::Matrix(const Matrix& other) : rows_(other.rows_), cols_(other.cols_) {
+Matrix::Matrix(const Matrix& other)
+    : rows_(other.rows_),
+      cols_(other.cols_),
+      input_file_(nullptr),
+      output_file_(nullptr) {
   init_matrix(kNO_FILL);
   copy_data_other_to_this_matrix(other.matrix_);
 }
@@ -42,7 +50,7 @@ Matrix::Matrix(const Matrix& other) : rows_(other.rows_), cols_(other.cols_) {
  *
  * @param other Matrix&& type
  */
-Matrix::Matrix(Matrix&& other) {
+Matrix::Matrix(Matrix&& other) : input_file_(nullptr), output_file_(nullptr) {
   rows_ = other.rows_;
   cols_ = other.cols_;
   matrix_ = other.matrix_;
@@ -70,6 +78,20 @@ Matrix::~Matrix() {
   cols_ = 0;
   rows_ = 0;
 }
+
+void Matrix::Load(string& file_path) {
+  ifstream file(file_path);
+  input_file_ = &file;
+
+  IsInputFileOpened();
+  ReadMatrixSize();
+  ReadMatrix();
+
+  input_file_->close();
+  input_file_ = nullptr;
+}
+
+// void Matrix::Save(string& file_path) {}
 
 /**
  * @brief Compare matrix of this object with other
@@ -599,6 +621,62 @@ void Matrix::make_matrix_minor(Matrix* initial_matrix, int row, int col,
     i = 0;
     ++j;
   }
+}
+
+void Matrix::IsInputFileOpened() {
+  if (!input_file_->is_open()) {
+    throw invalid_argument("File cuold not be opened.");
+  }
+}
+
+void Matrix::IsOutputFileOpened() {
+  if (!output_file_->is_open()) {
+    throw invalid_argument("File could not be opened.");
+  }
+}
+
+void Matrix::ReadMatrixSize() {
+  string line;
+  getline(*input_file_, line, '\n');
+  int rows = 0, cols = 0;
+  sscanf(line.data(), "%d %d", &rows, &cols);
+
+  if (rows < 1 || cols < 1) {
+    input_file_->close();
+    throw invalid_argument("Incorrect matrix size");
+  }
+  set_rows(rows);
+  set_cols(cols);
+}
+
+void Matrix::ReadMatrix() {
+  string line;
+  int row = 0;
+  int rows = get_rows();
+  while (getline(*input_file_, line, '\n') && row < rows) {
+    ReadLineToMatrixRow(line, row);
+    ++row;
+  }
+}
+
+void Matrix::ReadLineToMatrixRow(string& line, int row) {
+  int col = 0;
+  for (size_t i = 0; i < line.size(); ++i) {
+    char* number = &(line.data())[i];
+    this->operator()(row, col) = atoi(number);
+    ++col;
+    ShiftToNextNumber(line, &i);
+  }
+}
+
+void Matrix::ShiftToNextNumber(string& line, size_t* i) {
+  while (isdigit(line.data()[*i]) && *i < line.size()) {
+    ++(*i);
+  }
+  while (!isdigit(line.data()[*i]) && *i < line.size()) {
+    ++(*i);
+  }
+  --(*i);
 }
 
 }  // namespace hhullen
