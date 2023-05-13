@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-using std::atoi;
+using std::atof;
 using std::fstream;
 using std::getline;
 using std::ifstream;

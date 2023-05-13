@@ -402,7 +402,7 @@ TEST(test_supports, load_from_file_correct) {
   EXPECT_EQ(test(1, 4), 8);
   EXPECT_EQ(test(2, 4), 8);
   EXPECT_EQ(test(3, 4), 6);
-  EXPECT_EQ(test(4, 4), 8);
+  EXPECT_EQ(test(4, 4), 8.95);
 }
 
 TEST(test_supports, load_from_file_incorrect) {
@@ -484,7 +484,7 @@ TEST(test_supports, write_file) {
   EXPECT_EQ(test(1, 4), 8);
   EXPECT_EQ(test(2, 4), 8);
   EXPECT_EQ(test(3, 4), 6);
-  EXPECT_EQ(test(4, 4), 8);
+  EXPECT_EQ(test(4, 4), 8.95);
 }
 
 int main(int argc, char* argv[]) {

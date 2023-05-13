@@ -680,7 +680,7 @@ void Matrix::ReadLineToMatrixRow(const string& line, int row) {
   int col = 0;
   for (size_t i = 0; i < line.size(); ++i) {
     const char* number = &(line.data())[i];
-    this->operator()(row, col) = atoi(number);
+    this->operator()(row, col) = atof(number);
     ++col;
     ShiftToNextNumber(line, &i);
   }
