@@ -13,7 +13,7 @@ LINTCFG_WAY=../materials/linters/$(LINTCFG)
 EXTENSION=--extensions=cc
 CHECK_FILES=*.cc *.h
 CPPCH_SETUP=--enable=warning,performance,portability  -v --language=c++ -$(STD)
-TO_DELETE=*.o *.a *.dSYM $(EXECUTABLE) $(LINTCFG)
+TO_DELETE=*.o *.a *.dSYM $(EXECUTABLE) $(LINTCFG) matrix_output.txt
 VALGRIND_SETUP=--tool=memcheck --leak-check=full --show-leak-kinds=all
 
 

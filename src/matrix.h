@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 using std::atoi;
+using std::fstream;
 using std::getline;
 using std::ifstream;
 using std::invalid_argument;
@@ -29,8 +30,8 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
-  void Load(string& file_path);
-  // void Save(string& file_path);
+  void Load(const string& file_path);
+  void Save(const string& file_path);
   bool IsEqual(const Matrix& other) const;
   void Summarize(const Matrix& other);
   void Substract(const Matrix& other);
@@ -86,8 +87,10 @@ class Matrix {
   void IsOutputFileOpened();
   void ReadMatrixSize();
   void ReadMatrix();
-  void ReadLineToMatrixRow(string& line, int row);
-  void ShiftToNextNumber(string& line, size_t* i);
+  void ReadLineToMatrixRow(const string& line, int row);
+  void ShiftToNextNumber(const string& line, size_t* i);
+  void WriteMatrixSize();
+  void WriteMatrix();
 };
 
 }  // namespace hhullen

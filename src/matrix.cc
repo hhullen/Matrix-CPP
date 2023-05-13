@@ -79,7 +79,12 @@ Matrix::~Matrix() {
   rows_ = 0;
 }
 
-void Matrix::Load(string& file_path) {
+/**
+ * @brief Load matrix from file
+ *
+ * @param file_path const string& type
+ */
+void Matrix::Load(const string& file_path) {
   ifstream file(file_path);
   input_file_ = &file;
 
@@ -91,7 +96,17 @@ void Matrix::Load(string& file_path) {
   input_file_ = nullptr;
 }
 
-// void Matrix::Save(string& file_path) {}
+void Matrix::Save(const string& file_path) {
+  ofstream file(file_path);
+  output_file_ = &file;
+
+  IsOutputFileOpened();
+  WriteMatrixSize();
+  WriteMatrix();
+
+  output_file_->close();
+  output_file_ = nullptr;
+}
 
 /**
  * @brief Compare matrix of this object with other
@@ -409,6 +424,8 @@ Matrix& Matrix::operator=(const Matrix& other) {
   cols_ = other.cols_;
   init_matrix(kNO_FILL);
   copy_data_other_to_this_matrix(other.matrix_);
+  output_file_ = nullptr;
+  input_file_ = nullptr;
 
   return *this;
 }
@@ -659,17 +676,17 @@ void Matrix::ReadMatrix() {
   }
 }
 
-void Matrix::ReadLineToMatrixRow(string& line, int row) {
+void Matrix::ReadLineToMatrixRow(const string& line, int row) {
   int col = 0;
   for (size_t i = 0; i < line.size(); ++i) {
-    char* number = &(line.data())[i];
+    const char* number = &(line.data())[i];
     this->operator()(row, col) = atoi(number);
     ++col;
     ShiftToNextNumber(line, &i);
   }
 }
 
-void Matrix::ShiftToNextNumber(string& line, size_t* i) {
+void Matrix::ShiftToNextNumber(const string& line, size_t* i) {
   while (isdigit(line.data()[*i]) && *i < line.size()) {
     ++(*i);
   }
@@ -677,6 +694,19 @@ void Matrix::ShiftToNextNumber(string& line, size_t* i) {
     ++(*i);
   }
   --(*i);
+}
+
+void Matrix::WriteMatrixSize() {
+  *output_file_ << get_rows() << " " << get_cols() << "\n";
+}
+
+void Matrix::WriteMatrix() {
+  for (int i = 0; i < get_rows(); ++i) {
+    for (int j = 0; j < get_cols(); ++j) {
+      *output_file_ << this->operator()(i, j) << " ";
+    }
+    *output_file_ << "\n";
+  }
 }
 
 }  // namespace hhullen

@@ -445,6 +445,48 @@ TEST(test_supports, load_from_file_incorrect) {
   EXPECT_EQ(test(4, 4), 0);
 }
 
+TEST(test_supports, write_file) {
+  Matrix test;
+  string path = string("datasets/marix_correct.txt");
+  test.Load(path);
+
+  test.Save("matrix_output.txt");
+  test.Load("matrix_output.txt");
+
+  EXPECT_EQ(test.get_rows(), 5);
+  EXPECT_EQ(test.get_cols(), 5);
+
+  EXPECT_EQ(test(0, 0), 1);
+  EXPECT_EQ(test(1, 0), 2);
+  EXPECT_EQ(test(2, 0), 4);
+  EXPECT_EQ(test(3, 0), 9);
+  EXPECT_EQ(test(4, 0), 5);
+
+  EXPECT_EQ(test(0, 1), 3);
+  EXPECT_EQ(test(1, 1), 4);
+  EXPECT_EQ(test(2, 1), 5);
+  EXPECT_EQ(test(3, 1), 0);
+  EXPECT_EQ(test(4, 1), 5);
+
+  EXPECT_EQ(test(0, 2), 4);
+  EXPECT_EQ(test(1, 2), 6);
+  EXPECT_EQ(test(2, 2), 6);
+  EXPECT_EQ(test(3, 2), 8);
+  EXPECT_EQ(test(4, 2), 6);
+
+  EXPECT_EQ(test(0, 3), 5);
+  EXPECT_EQ(test(1, 3), 7);
+  EXPECT_EQ(test(2, 3), 7);
+  EXPECT_EQ(test(3, 3), 7);
+  EXPECT_EQ(test(4, 3), 7);
+
+  EXPECT_EQ(test(0, 4), 6);
+  EXPECT_EQ(test(1, 4), 8);
+  EXPECT_EQ(test(2, 4), 8);
+  EXPECT_EQ(test(3, 4), 6);
+  EXPECT_EQ(test(4, 4), 8);
+}
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
