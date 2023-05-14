@@ -34,6 +34,7 @@ class Matrix {
   void Save(const string& file_path);
   bool IsEqual(const Matrix& other) const;
   void Summarize(const Matrix& other);
+  void SummarizeRows(const int base_row, const int summ_row);
   void Substract(const Matrix& other);
   void MultiplyNumber(const double num);
   void Multiply(const Matrix& other);

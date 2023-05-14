@@ -137,6 +137,22 @@ void Matrix::Summarize(const Matrix& other) {
 }
 
 /**
+ * @brief Summarize row on "base_row" index to row on "summ_row" index
+ *
+ * @param base_row const int type index of row have to be added to another
+ * @param summ_row const int type index of row to be simmarized with another
+ */
+void Matrix::SummarizeRows(const int base_row, const int summ_row) {
+  if (base_row < 0 || base_row >= rows_ || summ_row < 0 || summ_row >= rows_) {
+    throw out_of_range("Summation the matrix rows that is out of matrix size");
+  }
+
+  for (int col = 0; col < cols_; ++col) {
+    matrix_[summ_row][col] += matrix_[base_row][col];
+  }
+}
+
+/**
  * @brief Substracts this matrix with other
  *
  * @param other const Matrix& type
@@ -199,6 +215,10 @@ void Matrix::Multiply(const Matrix& other) {
  * @param num const double number to multiply by
  */
 void Matrix::MuliplyRowNumber(const int row, const double num) {
+  if (row < 0 || row >= rows_) {
+    throw out_of_range("Row index out of matrix size");
+  }
+
   for (int col = 0; col < cols_; ++col) {
     matrix_[row][col] *= num;
   }
