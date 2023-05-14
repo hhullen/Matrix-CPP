@@ -32,6 +32,7 @@ class Matrix {
 
   void Load(const string& file_path);
   void Save(const string& file_path);
+  void ExchangeRows(const int row_1, const int row_2);
   bool IsEqual(const Matrix& other) const;
   void Summarize(const Matrix& other);
   void SummarizeRows(const int base_row, const int summ_row);

@@ -97,6 +97,23 @@ void Matrix::Save(const string& file_path) {
 }
 
 /**
+ * @brief Exchanges two rows in places
+ *
+ * @param row_1 const int index of first row to exchange
+ * @param row_2 const int index of another row to be exchanged with first
+ */
+void Matrix::ExchangeRows(const int row_1, const int row_2) {
+  if (row_1 < 0 || row_1 >= rows_ || row_2 < 0 || row_2 >= rows_) {
+    throw out_of_range("The matrix rows indices that is out of matrix size");
+  }
+
+  double* buffer_row = matrix_[row_1];
+  matrix_[row_1] = matrix_[row_2];
+  matrix_[row_2] = buffer_row;
+  buffer_row = nullptr;
+}
+
+/**
  * @brief Compare matrix of this object with other
  *
  * @param other const Matrix& type
@@ -144,7 +161,8 @@ void Matrix::Summarize(const Matrix& other) {
  */
 void Matrix::SummarizeRows(const int base_row, const int summ_row) {
   if (base_row < 0 || base_row >= rows_ || summ_row < 0 || summ_row >= rows_) {
-    throw out_of_range("Summation the matrix rows that is out of matrix size");
+    throw out_of_range(
+        "Summation the matrix rows with indices that is out of matrix size");
   }
 
   for (int col = 0; col < cols_; ++col) {
