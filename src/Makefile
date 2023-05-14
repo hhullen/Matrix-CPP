@@ -32,7 +32,7 @@ test: clean
 	./$(MAIN_PROJ_NAME)_test.out
 
 $(MAIN_PROJ_NAME).a:
-	$(COMPILER) -c $(FUNCS)
+	$(COMPILER) -O3 -c $(FUNCS)
 	ar rc lib$(MAIN_PROJ_NAME).a $(MAIN_PROJ_NAME).o
 	ranlib lib$(MAIN_PROJ_NAME).a
 
