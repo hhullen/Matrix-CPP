@@ -487,6 +487,132 @@ TEST(test_supports, write_file) {
   EXPECT_EQ(test(4, 4), 8.95);
 }
 
+TEST(test_supports, multiply_row_to_number) {
+  Matrix test;
+  string path = string("datasets/marix_correct.txt");
+  test.Load(path);
+
+  test.MuliplyRowNumber(2, 3);
+
+  EXPECT_EQ(test.get_rows(), 5);
+  EXPECT_EQ(test.get_cols(), 5);
+
+  EXPECT_EQ(test(0, 0), 1);
+  EXPECT_EQ(test(1, 0), 2);
+  EXPECT_EQ(test(2, 0), 12);
+  EXPECT_EQ(test(3, 0), 9);
+  EXPECT_EQ(test(4, 0), 5);
+
+  EXPECT_EQ(test(0, 1), 3);
+  EXPECT_EQ(test(1, 1), 4);
+  EXPECT_EQ(test(2, 1), 15);
+  EXPECT_EQ(test(3, 1), 0);
+  EXPECT_EQ(test(4, 1), 5);
+
+  EXPECT_EQ(test(0, 2), 4);
+  EXPECT_EQ(test(1, 2), 6);
+  EXPECT_EQ(test(2, 2), 18);
+  EXPECT_EQ(test(3, 2), 8);
+  EXPECT_EQ(test(4, 2), 6);
+
+  EXPECT_EQ(test(0, 3), 5);
+  EXPECT_EQ(test(1, 3), 7);
+  EXPECT_EQ(test(2, 3), 21);
+  EXPECT_EQ(test(3, 3), 7);
+  EXPECT_EQ(test(4, 3), 7);
+
+  EXPECT_EQ(test(0, 4), 6);
+  EXPECT_EQ(test(1, 4), 8);
+  EXPECT_EQ(test(2, 4), 24);
+  EXPECT_EQ(test(3, 4), 6);
+  EXPECT_EQ(test(4, 4), 8.95);
+}
+
+TEST(test_supports, exchqnge_rows) {
+  Matrix test;
+  string path = string("datasets/marix_correct.txt");
+  test.Load(path);
+
+  test.MuliplyRowNumber(2, 3);
+  test.ExchangeRows(0, 2);
+
+  EXPECT_EQ(test.get_rows(), 5);
+  EXPECT_EQ(test.get_cols(), 5);
+
+  EXPECT_EQ(test(0, 0), 12);
+  EXPECT_EQ(test(1, 0), 2);
+  EXPECT_EQ(test(2, 0), 1);
+  EXPECT_EQ(test(3, 0), 9);
+  EXPECT_EQ(test(4, 0), 5);
+
+  EXPECT_EQ(test(0, 1), 15);
+  EXPECT_EQ(test(1, 1), 4);
+  EXPECT_EQ(test(2, 1), 3);
+  EXPECT_EQ(test(3, 1), 0);
+  EXPECT_EQ(test(4, 1), 5);
+
+  EXPECT_EQ(test(0, 2), 18);
+  EXPECT_EQ(test(1, 2), 6);
+  EXPECT_EQ(test(2, 2), 4);
+  EXPECT_EQ(test(3, 2), 8);
+  EXPECT_EQ(test(4, 2), 6);
+
+  EXPECT_EQ(test(0, 3), 21);
+  EXPECT_EQ(test(1, 3), 7);
+  EXPECT_EQ(test(2, 3), 5);
+  EXPECT_EQ(test(3, 3), 7);
+  EXPECT_EQ(test(4, 3), 7);
+
+  EXPECT_EQ(test(0, 4), 24);
+  EXPECT_EQ(test(1, 4), 8);
+  EXPECT_EQ(test(2, 4), 6);
+  EXPECT_EQ(test(3, 4), 6);
+  EXPECT_EQ(test(4, 4), 8.95);
+}
+
+TEST(test_supports, summarize_rows) {
+  Matrix test;
+  string path = string("datasets/marix_correct.txt");
+  test.Load(path);
+
+  test.MuliplyRowNumber(2, 3);
+  test.ExchangeRows(0, 2);
+  test.SummarizeRows(0, 2);
+
+  EXPECT_EQ(test.get_rows(), 5);
+  EXPECT_EQ(test.get_cols(), 5);
+
+  EXPECT_EQ(test(0, 0), 12);
+  EXPECT_EQ(test(1, 0), 2);
+  EXPECT_EQ(test(2, 0), 13);
+  EXPECT_EQ(test(3, 0), 9);
+  EXPECT_EQ(test(4, 0), 5);
+
+  EXPECT_EQ(test(0, 1), 15);
+  EXPECT_EQ(test(1, 1), 4);
+  EXPECT_EQ(test(2, 1), 18);
+  EXPECT_EQ(test(3, 1), 0);
+  EXPECT_EQ(test(4, 1), 5);
+
+  EXPECT_EQ(test(0, 2), 18);
+  EXPECT_EQ(test(1, 2), 6);
+  EXPECT_EQ(test(2, 2), 22);
+  EXPECT_EQ(test(3, 2), 8);
+  EXPECT_EQ(test(4, 2), 6);
+
+  EXPECT_EQ(test(0, 3), 21);
+  EXPECT_EQ(test(1, 3), 7);
+  EXPECT_EQ(test(2, 3), 26);
+  EXPECT_EQ(test(3, 3), 7);
+  EXPECT_EQ(test(4, 3), 7);
+
+  EXPECT_EQ(test(0, 4), 24);
+  EXPECT_EQ(test(1, 4), 8);
+  EXPECT_EQ(test(2, 4), 30);
+  EXPECT_EQ(test(3, 4), 6);
+  EXPECT_EQ(test(4, 4), 8.95);
+}
+
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
