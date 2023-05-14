@@ -11,8 +11,6 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
-  void Load(const string& file_path);
-  void Save(const string& file_path);
   bool IsEqual(const Matrix& other);
   void Summarize(const Matrix& other);
   void SummarizeRows(const int base_row, const int summ_row);
@@ -42,10 +40,23 @@ class Matrix {
   Matrix operator*=(const Matrix& other);
   double operator()(int i, int j) const;
   double operator()(int i, int j);
+
+  void Load(const string& file_path);
+  void Save(const string& file_path);
   ...
 };
 ```
 
+```c++
+// matrix file format: (first line is size, next is matrix)
+5 5
+1 3 4 5 6
+2 4 6 7 8
+4 5 6 7 8
+9 0 8 7 6
+5 5 6 7 8.95
+```
+
 ### How to use
-- You can make libraty using command `make matrix.a` from `src` directory and then include it to compilation command as `-L <path_to_libmatrix.a> -lmatrix` (example for g++ compiler)
+- You can make libraty using command `make matrix.a` from `src` directory and then include it to compilation command as `-L <path_to_libmatrix_dir.a> -lmatrix` (example for g++ compiler)
 - Possibly to use `matrix.h` and `matrix.cc` source files as alternative

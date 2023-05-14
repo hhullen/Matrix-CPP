@@ -16,9 +16,9 @@ using std::out_of_range;
 using std::sscanf;
 using std::string;
 
-const double kACCURACY = 0.0000001;
-const bool kFILL_WITH_ZERO = true;
-const bool kNO_FILL = false;
+const double kAccuracy = 0.0000001;
+const bool kFillWithZero = true;
+const bool kNoFill = false;
 
 namespace hhullen {
 

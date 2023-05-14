@@ -9,7 +9,7 @@ namespace hhullen {
  * @brief Construct a new Matrix::Matrix object
  *
  */
-Matrix::Matrix() : rows_(4), cols_(4) { init_matrix(kFILL_WITH_ZERO); }
+Matrix::Matrix() : rows_(4), cols_(4) { init_matrix(kFillWithZero); }
 
 /**
  * @brief Construct a new Matrix::Matrix object
@@ -24,7 +24,7 @@ Matrix::Matrix(int rows, int cols) {
 
   rows_ = rows;
   cols_ = cols;
-  init_matrix(kFILL_WITH_ZERO);
+  init_matrix(kFillWithZero);
 }
 
 /**
@@ -33,7 +33,7 @@ Matrix::Matrix(int rows, int cols) {
  * @param other const Matrix& type
  */
 Matrix::Matrix(const Matrix& other) : rows_(other.rows_), cols_(other.cols_) {
-  init_matrix(kNO_FILL);
+  init_matrix(kNoFill);
   copy_data_other_to_this_matrix(other.matrix_);
 }
 
@@ -109,7 +109,7 @@ bool Matrix::IsEqual(const Matrix& other) const {
   if (rows_ == other.rows_ && cols_ == other.cols_) {
     for (int i = 0; is_equal && i < rows_; ++i) {
       for (int j = 0; is_equal && j < cols_; ++j) {
-        is_equal = fabs(matrix_[i][j] - other.matrix_[i][j]) < kACCURACY;
+        is_equal = fabs(matrix_[i][j] - other.matrix_[i][j]) < kAccuracy;
       }
     }
   } else {
@@ -318,7 +318,7 @@ double Matrix::Determinant() {
 Matrix Matrix::Inverse() {
   double det = this->Determinant();
 
-  if (fabs(det) < kACCURACY) {
+  if (fabs(det) < kAccuracy) {
     throw invalid_argument("Inversion of matrix with Determinant equals 0");
   }
   Matrix returnable(*this);
@@ -442,7 +442,7 @@ Matrix& Matrix::operator=(const Matrix& other) {
   this->~Matrix();
   rows_ = other.rows_;
   cols_ = other.cols_;
-  init_matrix(kNO_FILL);
+  init_matrix(kNoFill);
   copy_data_other_to_this_matrix(other.matrix_);
 
   return *this;
@@ -617,7 +617,7 @@ void Matrix::scan_column_to_find_nonzero_num(Matrix* buffer, const int row,
   bool found = false;
 
   for (int i = buffer->rows_ - 1; !found && i >= 0; i--) {
-    if (fabs(buffer->matrix_[i][col]) >= kACCURACY) {
+    if (fabs(buffer->matrix_[i][col]) >= kAccuracy) {
       summ_rows(buffer, i, row);
       found = true;
     } else if (i == 0) {

@@ -165,7 +165,7 @@ TEST(test_operations, Determinant) {
   test.set_element(2, 2, 1);
 
   det = test.Determinant();
-  EXPECT_TRUE(det - (-40) < kACCURACY);
+  EXPECT_TRUE(det - (-40) < kAccuracy);
 }
 
 TEST(test_operations, Inverse) {
@@ -199,14 +199,14 @@ TEST(test_accessors_mutators, set_element__get_element) {
   Matrix test(3, 3);
 
   test.set_element(2, 2, 13.5);
-  EXPECT_TRUE(test.get_element(2, 2) - 13.5 < kACCURACY);
+  EXPECT_TRUE(test.get_element(2, 2) - 13.5 < kAccuracy);
 }
 
 TEST(test_accessors_mutators, get_rows__get_cols) {
   Matrix test(3, 6);
 
-  EXPECT_TRUE(test.get_cols() - 6 < kACCURACY);
-  EXPECT_TRUE(test.get_rows() - 3 < kACCURACY);
+  EXPECT_TRUE(test.get_cols() - 6 < kAccuracy);
+  EXPECT_TRUE(test.get_rows() - 3 < kAccuracy);
 }
 
 TEST(test_accessors_mutators, set_rows__set_cols) {
@@ -217,11 +217,11 @@ TEST(test_accessors_mutators, set_rows__set_cols) {
 
   fill_matrix(&test, 42.1);
 
-  EXPECT_TRUE(test.get_cols() - 5 < kACCURACY);
-  EXPECT_TRUE(test.get_rows() - 10 < kACCURACY);
+  EXPECT_TRUE(test.get_cols() - 5 < kAccuracy);
+  EXPECT_TRUE(test.get_rows() - 10 < kAccuracy);
 
-  EXPECT_TRUE(test.get_element(0, 4) - 42.1 < kACCURACY);
-  EXPECT_TRUE(test.get_element(9, 4) - 42.1 < kACCURACY);
+  EXPECT_TRUE(test.get_element(0, 4) - 42.1 < kAccuracy);
+  EXPECT_TRUE(test.get_element(9, 4) - 42.1 < kAccuracy);
 }
 
 TEST(test_operators, eq_eq) {
@@ -334,13 +334,13 @@ TEST(test_operators, indexation) {
 
   fill_matrix(&test, 39.567);
 
-  EXPECT_TRUE(test(0, 0) - 39.567 < kACCURACY);
-  EXPECT_TRUE(test(1, 0) - 39.567 < kACCURACY);
-  EXPECT_TRUE(test(0, 2) - 39.567 < kACCURACY);
-  EXPECT_TRUE(test(2, 0) - 39.567 < kACCURACY);
-  EXPECT_TRUE(test(1, 1) - 39.567 < kACCURACY);
-  EXPECT_TRUE(test(2, 2) - 39.567 < kACCURACY);
-  EXPECT_TRUE(test(3, 3) - 39.567 < kACCURACY);
+  EXPECT_TRUE(test(0, 0) - 39.567 < kAccuracy);
+  EXPECT_TRUE(test(1, 0) - 39.567 < kAccuracy);
+  EXPECT_TRUE(test(0, 2) - 39.567 < kAccuracy);
+  EXPECT_TRUE(test(2, 0) - 39.567 < kAccuracy);
+  EXPECT_TRUE(test(1, 1) - 39.567 < kAccuracy);
+  EXPECT_TRUE(test(2, 2) - 39.567 < kAccuracy);
+  EXPECT_TRUE(test(3, 3) - 39.567 < kAccuracy);
 }
 
 TEST(test_operators, hadamart_product) {
@@ -495,7 +495,7 @@ int main(int argc, char* argv[]) {
 void run_through_matrix_num(Matrix test, double value) {
   for (int i = 0; i < test.get_rows(); i += 1) {
     for (int j = 0; j < test.get_cols(); j += 1) {
-      EXPECT_NEAR(test(i, j), value, kACCURACY);
+      EXPECT_NEAR(test(i, j), value, kAccuracy);
     }
   }
 }
