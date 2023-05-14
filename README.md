@@ -11,11 +11,14 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
+  void Load(const string& file_path);
+  void Save(const string& file_path);
   bool IsEqual(const Matrix& other);
   void Summarize(const Matrix& other);
   void Substract(const Matrix& other);
   void MultiplyNumber(const double num);
   void Multiply(const Matrix& other);
+  void MuliplyRowNumber(const int row, const double num);
   void HadamardProduct(const Matrix& other);
   Matrix Transpose();
   Matrix CelculateComplements();
@@ -36,6 +39,7 @@ class Matrix {
   Matrix operator+=(const Matrix& other);
   Matrix operator-=(const Matrix& other);
   Matrix operator*=(const Matrix& other);
+  double operator()(int i, int j) const;
   double operator()(int i, int j);
   ...
 };

@@ -9,10 +9,7 @@ namespace hhullen {
  * @brief Construct a new Matrix::Matrix object
  *
  */
-Matrix::Matrix()
-    : rows_(4), cols_(4), input_file_(nullptr), output_file_(nullptr) {
-  init_matrix(kFILL_WITH_ZERO);
-}
+Matrix::Matrix() : rows_(4), cols_(4) { init_matrix(kFILL_WITH_ZERO); }
 
 /**
  * @brief Construct a new Matrix::Matrix object
@@ -20,8 +17,7 @@ Matrix::Matrix()
  * @param rows int type
  * @param cols int type
  */
-Matrix::Matrix(int rows, int cols)
-    : input_file_(nullptr), output_file_(nullptr) {
+Matrix::Matrix(int rows, int cols) {
   if (rows <= 0 && cols <= 0) {
     throw invalid_argument("Creation matrix with 0x0 size or less");
   }
@@ -36,11 +32,7 @@ Matrix::Matrix(int rows, int cols)
  *
  * @param other const Matrix& type
  */
-Matrix::Matrix(const Matrix& other)
-    : rows_(other.rows_),
-      cols_(other.cols_),
-      input_file_(nullptr),
-      output_file_(nullptr) {
+Matrix::Matrix(const Matrix& other) : rows_(other.rows_), cols_(other.cols_) {
   init_matrix(kNO_FILL);
   copy_data_other_to_this_matrix(other.matrix_);
 }
@@ -50,7 +42,7 @@ Matrix::Matrix(const Matrix& other)
  *
  * @param other Matrix&& type
  */
-Matrix::Matrix(Matrix&& other) : input_file_(nullptr), output_file_(nullptr) {
+Matrix::Matrix(Matrix&& other) {
   rows_ = other.rows_;
   cols_ = other.cols_;
   matrix_ = other.matrix_;
@@ -86,26 +78,22 @@ Matrix::~Matrix() {
  */
 void Matrix::Load(const string& file_path) {
   ifstream file(file_path);
-  input_file_ = &file;
 
-  IsInputFileOpened();
-  ReadMatrixSize();
-  ReadMatrix();
+  IsInputFileOpened(file);
+  ReadMatrixSize(file);
+  ReadMatrix(file);
 
-  input_file_->close();
-  input_file_ = nullptr;
+  file.close();
 }
 
 void Matrix::Save(const string& file_path) {
   ofstream file(file_path);
-  output_file_ = &file;
 
-  IsOutputFileOpened();
-  WriteMatrixSize();
-  WriteMatrix();
+  IsOutputFileOpened(file);
+  WriteMatrixSize(file);
+  WriteMatrix(file);
 
-  output_file_->close();
-  output_file_ = nullptr;
+  file.close();
 }
 
 /**
@@ -202,6 +190,18 @@ void Matrix::Multiply(const Matrix& other) {
     buffer_row = nullptr;
   }
   cols_ = other.cols_;
+}
+
+/**
+ * @brief Multiplies matrix row to number
+ *
+ * @param row const int type row index
+ * @param num const double number to multiply by
+ */
+void Matrix::MuliplyRowNumber(const int row, const double num) {
+  for (int col = 0; col < cols_; ++col) {
+    matrix_[row][col] *= num;
+  }
 }
 
 /**
@@ -424,8 +424,6 @@ Matrix& Matrix::operator=(const Matrix& other) {
   cols_ = other.cols_;
   init_matrix(kNO_FILL);
   copy_data_other_to_this_matrix(other.matrix_);
-  output_file_ = nullptr;
-  input_file_ = nullptr;
 
   return *this;
 }
@@ -640,37 +638,37 @@ void Matrix::make_matrix_minor(Matrix* initial_matrix, int row, int col,
   }
 }
 
-void Matrix::IsInputFileOpened() {
-  if (!input_file_->is_open()) {
+void Matrix::IsInputFileOpened(const ifstream& file) {
+  if (!file.is_open()) {
     throw invalid_argument("File cuold not be opened.");
   }
 }
 
-void Matrix::IsOutputFileOpened() {
-  if (!output_file_->is_open()) {
+void Matrix::IsOutputFileOpened(const ofstream& file) {
+  if (!file.is_open()) {
     throw invalid_argument("File could not be opened.");
   }
 }
 
-void Matrix::ReadMatrixSize() {
+void Matrix::ReadMatrixSize(ifstream& file) {
   string line;
-  getline(*input_file_, line, '\n');
+  getline(file, line, '\n');
   int rows = 0, cols = 0;
   sscanf(line.data(), "%d %d", &rows, &cols);
 
   if (rows < 1 || cols < 1) {
-    input_file_->close();
+    file.close();
     throw invalid_argument("Incorrect matrix size");
   }
   set_rows(rows);
   set_cols(cols);
 }
 
-void Matrix::ReadMatrix() {
+void Matrix::ReadMatrix(ifstream& file) {
   string line;
   int row = 0;
   int rows = get_rows();
-  while (getline(*input_file_, line, '\n') && row < rows) {
+  while (getline(file, line, '\n') && row < rows) {
     ReadLineToMatrixRow(line, row);
     ++row;
   }
@@ -696,16 +694,16 @@ void Matrix::ShiftToNextNumber(const string& line, size_t* i) {
   --(*i);
 }
 
-void Matrix::WriteMatrixSize() {
-  *output_file_ << get_rows() << " " << get_cols() << "\n";
+void Matrix::WriteMatrixSize(ofstream& file) {
+  file << get_rows() << " " << get_cols() << "\n";
 }
 
-void Matrix::WriteMatrix() {
+void Matrix::WriteMatrix(ofstream& file) {
   for (int i = 0; i < get_rows(); ++i) {
     for (int j = 0; j < get_cols(); ++j) {
-      *output_file_ << this->operator()(i, j) << " ";
+      file << this->operator()(i, j) << " ";
     }
-    *output_file_ << "\n";
+    file << "\n";
   }
 }
 

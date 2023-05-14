@@ -37,6 +37,7 @@ class Matrix {
   void Substract(const Matrix& other);
   void MultiplyNumber(const double num);
   void Multiply(const Matrix& other);
+  void MuliplyRowNumber(const int row, const double num);
   void HadamardProduct(const Matrix& other);
   Matrix Transpose() const;
   Matrix CelculateComplements();
@@ -83,14 +84,14 @@ class Matrix {
   double algebraic_addition(Matrix* initial_matrix, int row, int col);
   void make_matrix_minor(Matrix* initial_matrix, int row, int col,
                          Matrix* minor);
-  void IsInputFileOpened();
-  void IsOutputFileOpened();
-  void ReadMatrixSize();
-  void ReadMatrix();
+  void IsInputFileOpened(const ifstream& file);
+  void IsOutputFileOpened(const ofstream& file);
+  void ReadMatrixSize(ifstream& file);
+  void ReadMatrix(ifstream& file);
   void ReadLineToMatrixRow(const string& line, int row);
   void ShiftToNextNumber(const string& line, size_t* i);
-  void WriteMatrixSize();
-  void WriteMatrix();
+  void WriteMatrixSize(ofstream& file);
+  void WriteMatrix(ofstream& file);
 };
 
 }  // namespace hhullen
