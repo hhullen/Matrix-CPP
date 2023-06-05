@@ -27,7 +27,7 @@ check:
 clean:
 	rm -rf $(TO_DELETE)
 
-test: clean
+tests: clean
 	$(COMPILER) $(STD) $(CPP_FLAGS) $(TEST_C) -o $(EXECUTABLE) $(TEST_FLAGS)
 	./$(MAIN_PROJ_NAME)_test.out
 
