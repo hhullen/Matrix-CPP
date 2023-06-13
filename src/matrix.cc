@@ -143,7 +143,7 @@ bool Matrix::IsEqual(const Matrix& other) const {
  */
 void Matrix::Summarize(const Matrix& other) {
   if (rows_ != other.rows_ || cols_ != other.cols_) {
-    throw invalid_argument("Summation the matrix that is not square");
+    throw invalid_argument("Matrix that is not square");
   }
 
   for (int i = 0; i < rows_; ++i) {
@@ -161,12 +161,49 @@ void Matrix::Summarize(const Matrix& other) {
  */
 void Matrix::SummarizeRows(const int base_row, const int summ_row) {
   if (base_row < 0 || base_row >= rows_ || summ_row < 0 || summ_row >= rows_) {
-    throw out_of_range(
-        "Summation the matrix rows with indices that is out of matrix size");
+    throw out_of_range("Matrix rows with indices that is out of matrix size");
   }
 
   for (int col = 0; col < cols_; ++col) {
     matrix_[summ_row][col] += matrix_[base_row][col];
+  }
+}
+
+/**
+ * @brief Add to some row another row multiplied by any number
+ *
+ * @param base_row const int type index of row to multiply by number and add to
+ * another
+ * @param num const double type number to multiply base_row on
+ * @param summ_row const int type index of row to be simmarized with another
+ */
+void Matrix::AddRowMultiplyedByNumberToRow(const int base_row, const double num,
+                                           const int summ_row) {
+  if (base_row < 0 || base_row >= rows_ || summ_row < 0 || summ_row >= rows_) {
+    throw out_of_range("Matrix rows with indices that is out of matrix size");
+  }
+
+  for (int col = 0; col < cols_; ++col) {
+    matrix_[summ_row][col] += matrix_[base_row][col] * num;
+  }
+}
+
+/**
+ * @brief Add to some row another row summarized with any number
+ *
+ * @param base_row const int type index of row to summarize with number and add
+ * to another
+ * @param num const double type number to summarize base_row with
+ * @param summ_row const int type index of row to be simmarized with another
+ */
+void Matrix::AddRowSummarizedByNumberToRow(const int base_row, const double num,
+                                           const int summ_row) {
+  if (base_row < 0 || base_row >= rows_ || summ_row < 0 || summ_row >= rows_) {
+    throw out_of_range("Matrix rows with indices that is out of matrix size");
+  }
+
+  for (int col = 0; col < cols_; ++col) {
+    matrix_[summ_row][col] += matrix_[base_row][col] + num;
   }
 }
 
