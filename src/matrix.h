@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+
 using std::atof;
 using std::getline;
 using std::ifstream;
@@ -74,7 +75,6 @@ class Matrix {
 
   void init_matrix(bool fill);
   void copy_data_other_to_this_matrix(double** other_matrix);
-  void copy_data_this_to_other_matrix(double** other_matrix);
   void calculate_multiplied_matrix_element(const Matrix& other, int i, int j,
                                            double* res);
   void fill_with_zeros(int current_row);

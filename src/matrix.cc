@@ -576,14 +576,6 @@ void Matrix::copy_data_other_to_this_matrix(double** other_matrix) {
   }
 }
 
-void Matrix::copy_data_this_to_other_matrix(double** other_matrix) {
-  for (int i = 0; i < rows_; ++i) {
-    for (int j = 0; j < cols_; ++j) {
-      other_matrix[i][j] = matrix_[i][j];
-    }
-  }
-}
-
 void Matrix::calculate_multiplied_matrix_element(const Matrix& other, int i,
                                                  int j, double* res) {
   for (int k = 0; k < cols_; k += 1) {
@@ -615,12 +607,11 @@ double Matrix::calculate_3d_Determinant() {
 }
 
 double Matrix::calculate_Gauss_Determinant() {
-  Matrix buffer(cols_, rows_);
+  Matrix buffer(*this);
   double returnable = 0.0;
   int row_constrain = 0;
   bool is_det_zero = false;
 
-  copy_data_this_to_other_matrix(buffer.matrix_);
   for (int i = 0; !is_det_zero && i < buffer.cols_; ++i) {
     for (int j = buffer.rows_ - 1; !is_det_zero && j > row_constrain; j -= 1) {
       process_the_row(&buffer, j, i, &is_det_zero);
@@ -629,8 +620,6 @@ double Matrix::calculate_Gauss_Determinant() {
   }
   if (!is_det_zero) {
     returnable = multiply_diagonal(&buffer);
-  } else {
-    returnable = 0.0;
   }
 
   return returnable;
