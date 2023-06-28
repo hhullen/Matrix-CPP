@@ -70,8 +70,6 @@ class Matrix {
  private:
   int rows_, cols_;
   double** matrix_;
-  ifstream* input_file_;
-  ofstream* output_file_;
 
   void init_matrix(bool fill);
   void copy_data_other_to_this_matrix(double** other_matrix);
