@@ -3,10 +3,14 @@
 
 #include <gtest/gtest.h>
 
-#include "matrix.h"
-using hhullen::Matrix;
+#include "matrix.cc"
 
-void run_through_matrix_num(Matrix test, double value);
-void fill_matrix(Matrix* test, double value);
+using hhullen::Matrix;
+using std::string;
+
+void run_through_matrix_num(Matrix<double>& test, double value);
+void fill_matrix(Matrix<double>* test, double value);
+
+const double kAccuracy = 0.000001;
 
 #endif  // SRC_MATRIX_TEST_H_
