@@ -21,9 +21,7 @@ using std::sscanf;
 
 namespace hhullen {
 template <class T>
-concept arithmetic = requires(T var) {
-  std::is_arithmetic_v<T>;
-};
+concept arithmetic = requires(T var) { std::is_arithmetic_v<T>; };
 
 template <arithmetic Type>
 class Matrix {

@@ -1,8 +1,10 @@
 # Matrix - simple matrix operations library in C++ language
+С++20
 
 ### Matrix class structure
 
 ```c++
+template <arithmetic Type>
 class Matrix {
  public:
   Matrix();
@@ -11,42 +13,35 @@ class Matrix {
   Matrix(Matrix&& other);
   ~Matrix();
 
-  bool IsEqual(const Matrix& other);
-  void Summarize(const Matrix& other);
-  void SummarizeRows(const int base_row, const int summ_row);
-  void AddRowMultiplyedByNumberToRow(const int base_row, const double num,
-                                     const int summ_row);
-  void AddRowSummarizedByNumberToRow(const int base_row, const double num,
-                                     const int summ_row);
-  void Substract(const Matrix& other);
-  void MultiplyNumber(const double num);
-  void Multiply(const Matrix& other);
-  void MuliplyRowNumber(const int row, const double num);
-  void HadamardProduct(const Matrix& other);
-  Matrix Transpose();
-  Matrix CelculateComplements();
-  double Determinant();
-  Matrix Inverse();
-  double get_element(int i, int j);
-  void set_element(int i, int j, double value);
-  int get_rows();
-  int get_cols();
+  int rows() const;
+  int cols() const;
   void set_rows(int new_val);
   void set_cols(int new_val);
+  void set(int i, int j, Type value);
 
-  bool operator==(const Matrix& other);
-  Matrix& operator=(const Matrix& other);
-  Matrix operator+(const Matrix& other);
-  Matrix operator-(const Matrix& other);
-  Matrix operator*(const Matrix& other);
-  Matrix operator+=(const Matrix& other);
-  Matrix operator-=(const Matrix& other);
-  Matrix operator*=(const Matrix& other);
-  double operator()(int i, int j) const;
-  double operator()(int i, int j);
+  void SwapRows(const int row_1, const int row_2);
+  void ProcessRows(const int row_1, const int row_2,
+                   const std::function<void(Type&, Type&)>& lambda);
+  void ProcessRow(const int row, const std::function<void(Type&)>& lambda);
+  void ProcessEach(const std::function<void(Type&)>& lambda);
+  void HadamardProduct(const Matrix<Type>& other);
+  Matrix<Type> Transpose() const;
 
-  void Load(const string& file_path);
-  void Save(const string& file_path);
+  bool operator==(const Matrix<Type>& other) const;
+  bool operator!=(const Matrix<Type>& other) const;
+  Matrix<Type>& operator=(const Matrix<Type>& other);
+  Matrix<Type> operator+(const Matrix<Type>& other) const;
+  Matrix<Type> operator-(const Matrix<Type>& other) const;
+  Matrix<Type> operator*(const Matrix<Type>& other) const;
+  template <arithmetic Val>
+  Matrix<Type> operator*(const Val value) const;
+  Matrix<Type> operator+=(const Matrix<Type>& other);
+  Matrix<Type> operator-=(const Matrix<Type>& other);
+  Matrix<Type> operator*=(const Matrix<Type>& other);
+  template <arithmetic Val>
+  Matrix<Type> operator*=(const Val value);
+  Type& operator()(int i, int j);
+  Type operator()(int i, int j) const;
   ...
 };
 ```
