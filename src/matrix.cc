@@ -11,7 +11,7 @@ namespace hhullen {
  */
 template <arithmetic Type>
 Matrix<Type>::Matrix() : rows_(1), cols_(1) {
-  init_matrix(true);
+  InitMatrix(true);
 }
 
 /**
@@ -28,7 +28,7 @@ Matrix<Type>::Matrix(int rows, int cols) {
 
   rows_ = rows;
   cols_ = cols;
-  init_matrix(true);
+  InitMatrix(true);
 }
 
 /**
@@ -326,7 +326,7 @@ Matrix<Type>& Matrix<Type>::operator=(const Matrix<Type>& other) {
   if (other != *this) {
     rows_ = other.rows_;
     cols_ = other.cols_;
-    init_matrix(false);
+    InitMatrix(false);
     for (int i = 0; i < rows_; ++i) {
       for (int j = 0; j < cols_; ++j) {
         matrix_[i][j] = other.matrix_[i][j];
@@ -444,7 +444,7 @@ Type Matrix<Type>::operator()(int i, int j) const {
   Private functions
 */
 template <arithmetic Type>
-void Matrix<Type>::init_matrix(bool fill_with_zero) {
+void Matrix<Type>::InitMatrix(bool fill_with_zero) {
   matrix_ = MatrixPtr(new RowPtr[rows_]);
   for (int i = 0; i < rows_; ++i) {
     matrix_[i] = RowPtr(new Type[cols_]);

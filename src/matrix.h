@@ -21,7 +21,9 @@ using std::sscanf;
 
 namespace hhullen {
 template <class T>
-concept arithmetic = requires(T var) { std::is_arithmetic_v<T>; };
+concept arithmetic = requires(T var) {
+  std::is_arithmetic_v<T>;
+};
 
 template <arithmetic Type>
 class Matrix {
@@ -74,7 +76,7 @@ class Matrix {
   MatrixPtr matrix_;
   const double kAccuracy = 0.000001 * std::is_floating_point_v<Type>;
 
-  void init_matrix(bool fill_with_zero = false);
+  void InitMatrix(bool fill_with_zero = false);
   void IsInputFileOpened(const ifstream& file);
   void IsOutputFileOpened(const ofstream& file);
   void ReadMatrixSize(ifstream& file);
